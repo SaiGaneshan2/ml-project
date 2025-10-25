@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Turbine Damage Detection System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="wind-turbine-loader">
+                <div class="blade blade-1"></div>
+                <div class="blade blade-2"></div>
+                <div class="blade blade-3"></div>
+            </div>
+            <h2>Loading AI Detection System...</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <!-- 3D Background Canvas -->
+        <canvas id="three-canvas"></canvas>
+        
+        <!-- Main UI -->
+        <div class="main-container">
+            <!-- Header -->
+            <header class="header">
+                <div class="logo">
+                    <div class="turbine-icon">⚡</div>
+                    <h1>Wind Turbine Damage Detection</h1>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>AI System Online</span>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="hero-section">
+                    <h2>Advanced AI-Powered Blade Inspection</h2>
+                    <p>Upload images or videos to detect damage and dirt on wind turbine blades with cutting-edge computer vision</p>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="upload-section">
+                    <div class="upload-tabs">
+                        <button class="tab-button active" data-tab="image">Image Detection</button>
+                        <button class="tab-button" data-tab="video">Video Analysis</button>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="tab-content active" id="image-tab">
+                        <div class="upload-area" id="image-upload">
+                        <div class="upload-content">
+                            <div class="upload-icon">📸</div>
+                            <h3>Upload Wind Turbine Images</h3>
+                            <p>Drag & drop or click to browse multiple images</p>
+                            <input type="file" id="image-input" accept="image/*" multiple hidden>
+                            <button class="upload-btn" onclick="document.getElementById('image-input').click()">
+                                Choose Images
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Upload -->
+                    <div class="tab-content" id="video-tab">
+                        <div class="upload-area" id="video-upload">
+                            <div class="upload-content">
+                                <div class="upload-icon">🎥</div>
+                                <h3>Upload Wind Turbine Video</h3>
+                                <p>Drag & drop or click to browse</p>
+                                <input type="file" id="video-input" accept="video/*" hidden>
+                                <button class="upload-btn" onclick="document.getElementById('video-input').click()">
+                                    Choose Video
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="results-section" style="display: none;">
+                    <div class="results-header">
+                        <h3>Detection Results</h3>
+                        <div class="detection-stats">
+                            <span class="stat">
+                                <span class="stat-number" id="total-detections">0</span>
+                                <span class="stat-label">Detections</span>
+                            </span>
+                            <span class="stat">
+                                <span class="stat-number" id="damage-count">0</span>
+                                <span class="stat-label">Damage</span>
+                            </span>
+                            <span class="stat">
+                                <span class="stat-number" id="dirt-count">0</span>
+                                <span class="stat-label">Dirt</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="results-content">
+                        <div class="image-container">
+                            <img id="result-image" alt="Detection Results">
+                        </div>
+                        <div class="detection-list" id="detection-list">
+                            <!-- Detection items will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Animation -->
+                <div class="processing-overlay" id="processing-overlay" style="display: none;">
+                    <div class="processing-content">
+                        <div class="spinning-turbine">
+                            <div class="turbine-base"></div>
+                            <div class="turbine-blades">
+                                <div class="blade"></div>
+                                <div class="blade"></div>
+                                <div class="blade"></div>
+                            </div>
+                        </div>
+                        <h3>Analyzing with AI...</h3>
+                        <p id="processing-text">Processing your image</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="floating-elements">
+            <div class="floating-particle" style="--delay: 0s; --duration: 3s;"></div>
+            <div class="floating-particle" style="--delay: 1s; --duration: 4s;"></div>
+            <div class="floating-particle" style="--delay: 2s; --duration: 5s;"></div>
+            <div class="floating-particle" style="--delay: 0.5s; --duration: 3.5s;"></div>
+        </div>
+    </div>
+
+    <script src="three-scene.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
